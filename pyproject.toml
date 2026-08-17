@@ -34,6 +34,13 @@ dependencies = [
     "typing_extensions",
     "huggingface_hub",
     "pyyaml",
+    # Imported unconditionally by the SAM 3 code on the inference path:
+    # einops by sam3/sam/rope.py, scipy by sam3/train/matcher.py, pycocotools by
+    # sam3/train/masks_ops.py. decord, flash_attn_interface, cc_torch, skimage,
+    # torch_generic_nms and torchcodec are all import-guarded and optional.
+    "einops",
+    "scipy",
+    "pycocotools",
 ]
 
 [project.optional-dependencies]

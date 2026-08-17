@@ -15,7 +15,6 @@ from typing import Any, Callable, Dict, List, Optional, Set, Tuple, Union
 import torch
 import torch.utils.data
 import torchvision
-from decord import cpu, VideoReader
 from iopath.common.file_io import g_pathmgr
 
 from PIL import Image as PILImage
@@ -205,7 +204,13 @@ class CustomCocoDetectionAPI(VisionDataset):
             path = os.path.join(self.root, path)
             try:
                 if ".mp4" in path and path[-4:] == ".mp4":
-                    # Going to load a video frame
+                    # Going to load a video frame.
+                    # decord is imported here rather than at module scope: this
+                    # module is reached from sam3.model.sam3_image (via the
+                    # collator's Datapoint), so a top-level import would make
+                    # decord a hard requirement of plain image inference.
+                    from decord import cpu, VideoReader
+
                     video_path, frame = path.split("@")
                     video = VideoReader(video_path, ctx=cpu(0))
                     # Convert to PIL image
