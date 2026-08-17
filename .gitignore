@@ -1,0 +1,35 @@
+# Weights are fetched, never committed (3.14 GB)
+*.pt
+*.pth
+*.part-*
+weights/
+
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+build/
+dist/
+.eggs/
+.venv/
+venv/
+env/
+
+# Tooling
+.pytest_cache/
+.ruff_cache/
+.mypy_cache/
+.ipynb_checkpoints/
+
+# Prediction output
+out/
+outputs/
+predictions/
+overviews/
+coco_instances.json
+
+# OS / editor
+.DS_Store
+*.swp
+.idea/
+.vscode/

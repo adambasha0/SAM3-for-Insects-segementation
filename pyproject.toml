@@ -1,0 +1,70 @@
+[build-system]
+requires = ["setuptools>=61", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "sam3-insect"
+version = "0.1.0"
+description = "Insect detection and instance segmentation with a fine-tuned SAM 3"
+readme = "README.md"
+requires-python = ">=3.10"
+license = { file = "LICENSE" }
+authors = [{ name = "Adam Basha" }]
+keywords = ["segmentation", "detection", "insects", "arthropods", "sam3", "entomology"]
+classifiers = [
+    "Development Status :: 4 - Beta",
+    "Intended Audience :: Science/Research",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+    "Topic :: Scientific/Engineering :: Artificial Intelligence",
+    "Topic :: Scientific/Engineering :: Bio-Informatics",
+]
+dependencies = [
+    "torch>=2.3",
+    "torchvision",
+    "timm>=1.0.17",
+    "numpy",
+    "pillow",
+    "opencv-python-headless",
+    "tqdm",
+    "ftfy",
+    "regex",
+    "iopath>=0.1.10",
+    "typing_extensions",
+    "huggingface_hub",
+    "pyyaml",
+]
+
+[project.optional-dependencies]
+app = ["gradio>=4"]
+dev = ["pytest", "pyflakes"]
+
+[project.scripts]
+sam3_insect_predict = "sam3_insect.cli:main"
+
+[project.urls]
+Homepage = "https://github.com/adambasha0/SAM3-for-Insects-segementation"
+Weights = "https://huggingface.co/adambasha0/sam3-for-insects-segmentation"
+"Upstream SAM 3" = "https://github.com/facebookresearch/sam3"
+"flat-bug" = "https://github.com/darsa-group/flat-bug"
+
+[tool.setuptools]
+# Listed explicitly: `sam3/` here is the inference-only subset of Meta's package,
+# so a glob would advertise subpackages that were deliberately left out.
+packages = [
+    "sam3",
+    "sam3.model",
+    "sam3.model.utils",
+    "sam3.perflib",
+    "sam3.sam",
+    "sam3.train",
+    "sam3.train.data",
+    "sam3_insect",
+]
+
+[tool.setuptools.package-data]
+sam3 = ["perflib/triton/*.py"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
