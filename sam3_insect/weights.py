@@ -1,26 +1,25 @@
 """Fetching, splitting and verifying the fine-tuned checkpoint.
 
-The fine-tuned weights are 3.14 GB of fp32 tensors, which is awkward to
-distribute: GitHub caps a single Git LFS object at 2 GB, and GitHub Free only
-includes 10 GiB of LFS *bandwidth* per month -- about three downloads.  The
-checkpoint is therefore shipped as two ~1.57 GiB parts that this module
-reassembles and checksums.
+The fine-tuned weights are 3.14 GB of fp32 tensors, and GitHub caps a single
+file at 2 GB, so the checkpoint ships as two ~1.57 GiB parts that this module
+reassembles and checksums.  The split is a plain byte-wise concatenation, so
+recovering the weights never depends on this code -- ``cat`` will do.
 
-Four sources are supported, in descending order of how well they scale:
+Four sources are supported:
 
 ``release``
-    Two part files attached to a GitHub Release.  Release assets are plain
-    HTTPS downloads with no bandwidth accounting, so this is the default for
-    the Colab notebook.
+    Two part files attached to a GitHub Release.  The default: plain HTTPS,
+    no authentication, no rate limit.
 ``hf``
-    A HuggingFace Hub model repo.  Also unmetered, resumable, and can hold the
-    checkpoint as one file; needs a Hub account to publish.
+    A HuggingFace Hub model repo, if you mirror the weights to one.  Holds the
+    checkpoint as a single resumable file, which is easier over a flaky link.
+    Pass ``hf_repo=`` to point at your own.
 ``lfs``
-    The part files tracked by Git LFS inside this repository.  Correct but
-    metered -- fine for a handful of pulls.
+    Part files present in a clone that tracks them through Git LFS.  Note that
+    GitHub Free meters LFS bandwidth at 10 GiB/month, about three pulls.
 ``local``
     A path you already have: a Drive mount, a manual upload, or the original
-    training checkpoint on the server.
+    training checkpoint.
 """
 
 from __future__ import annotations
@@ -45,7 +44,7 @@ INFERENCE_CKPT_SHA256 = (
 )
 
 #: Default GitHub repo and release tag holding the part assets.
-DEFAULT_GITHUB_REPO = "adambasha0/sam3-insect-segmentation"
+DEFAULT_GITHUB_REPO = "adambasha0/SAM3-for-Insects-segementation"
 DEFAULT_RELEASE_TAG = "checkpoint-18"
 DEFAULT_PART_NAMES = (
     "checkpoint_18_inference.pt.part-00",
@@ -53,7 +52,7 @@ DEFAULT_PART_NAMES = (
 )
 
 #: Default HuggingFace Hub location (publish there to use ``source="hf"``).
-DEFAULT_HF_REPO = "adambasha0/sam3-insect-segmentation"
+DEFAULT_HF_REPO = "adambasha0/sam3-for-insects-segmentation"
 DEFAULT_HF_FILENAME = "checkpoint_18_inference.pt"
 
 
