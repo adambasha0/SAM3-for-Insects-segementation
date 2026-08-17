@@ -1,0 +1,44 @@
+cff-version: 1.2.0
+title: SAM 3 for Insects
+message: >-
+  If you use this software or the fine-tuned checkpoint, please cite it together
+  with SAM 3 and flat-bug, on which it depends.
+type: software
+authors:
+  - given-names: Adam
+    family-names: Basha
+    affiliation: Karlsruhe Institute of Technology
+repository-code: "https://github.com/adambasha0/SAM3-for-Insects-segementation"
+abstract: >-
+  Detection and instance segmentation of terrestrial arthropods using Meta's
+  Segment Anything 3 image model, fine-tuned on the flat-bug aggregate of 23
+  insect datasets and served through flat-bug-style pyramid tiling so that small
+  specimens in large trap images are recovered rather than lost to downsampling.
+keywords:
+  - instance segmentation
+  - object detection
+  - entomology
+  - arthropods
+  - biodiversity monitoring
+  - segment anything
+license-url: "https://github.com/adambasha0/SAM3-for-Insects-segementation/blob/main/LICENSE"
+version: 0.1.0
+references:
+  - type: article
+    title: "SAM 3: Segment Anything with Concepts"
+    year: 2025
+    authors:
+      - given-names: Nicolas
+        family-names: Carion
+      - given-names: Laura
+        family-names: Gustafson
+    notes: Base model; see https://github.com/facebookresearch/sam3
+  - type: article
+    title: >-
+      flat-bug: A General Method for Detection and Segmentation of Terrestrial
+      Arthropods in Images
+    journal: Methods in Ecology and Evolution
+    year: 2025
+    notes: >-
+      Training data aggregate and the pyramid tiling methodology; see
+      https://github.com/darsa-group/flat-bug
