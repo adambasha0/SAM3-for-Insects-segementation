@@ -45,7 +45,7 @@ sam3_insect_predict = "sam3_insect.cli:main"
 
 [project.urls]
 Homepage = "https://github.com/adambasha0/SAM3-for-Insects-segementation"
-Weights = "https://huggingface.co/adambasha0/sam3-for-insects-segmentation"
+Weights = "https://github.com/adambasha0/SAM3-for-Insects-segementation/releases/tag/checkpoint-18"
 "Upstream SAM 3" = "https://github.com/facebookresearch/sam3"
 "flat-bug" = "https://github.com/darsa-group/flat-bug"
 

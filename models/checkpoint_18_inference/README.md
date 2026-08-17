@@ -11,7 +11,7 @@ checksum and the two scripts that fetch and verify them.
 
 ```python
 from sam3_insect import resolve_checkpoint
-ckpt = resolve_checkpoint("release")   # or "hf", or "local" with path=...
+ckpt = resolve_checkpoint("release")   # or "local" with path=...
 ```
 
 Either way you end up with `checkpoint_18_inference.pt`, 3,371,878,637 bytes, SHA-256
@@ -22,13 +22,15 @@ dd8a6ce0402a6c2d00b2849a3e08becc6f3aa4ececdc526580a54539c9c41829
 
 ## Sources
 
-| | |
-|---|---|
-| GitHub Release | <https://github.com/adambasha0/SAM3-for-Insects-segementation/releases/tag/checkpoint-18> |
-| HuggingFace Hub | <https://huggingface.co/adambasha0/sam3-for-insects-segmentation> |
+The [GitHub Release `checkpoint-18`](https://github.com/adambasha0/SAM3-for-Insects-segementation/releases/tag/checkpoint-18)
+carries the checkpoint as **two ~1.57 GiB parts**, because GitHub caps a single file at 2 GB.
 
-The release carries the checkpoint as **two ~1.57 GiB parts**, because GitHub caps a single file at
-2 GB. The Hub carries it as one file, which is easier if you download it repeatedly.
+If you mirror the weights to a HuggingFace Hub repo — one file, resumable, convenient if you pull
+them often — point the resolver at it:
+
+```python
+resolve_checkpoint("hf", hf_repo="you/your-repo", hf_filename="checkpoint_18_inference.pt")
+```
 
 ## Joining parts by hand
 
