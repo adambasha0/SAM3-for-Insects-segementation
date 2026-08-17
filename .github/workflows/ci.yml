@@ -1,0 +1,55 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+  workflow_dispatch:
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        python-version: ["3.10", "3.12"]
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: ${{ matrix.python-version }}
+          cache: pip
+
+      - name: Install
+        run: |
+          # CPU-only torch keeps the runner from pulling ~2.5 GB of CUDA wheels;
+          # nothing in the test suite touches a GPU or the 3.14 GB checkpoint.
+          pip install --index-url https://download.pytorch.org/whl/cpu torch torchvision
+          pip install -e ".[app,dev]"
+
+      - name: Lint
+        run: python -m pyflakes sam3_insect tests
+
+      - name: Test
+        run: python -m pytest -q
+
+      - name: CLI is wired up
+        run: sam3_insect_predict --help
+
+      - name: The Gradio app builds without weights
+        run: |
+          python - <<'PY'
+          # A stub predictor is enough to prove the UI wiring is intact; loading
+          # the real model would mean downloading 3.14 GB on every push.
+          from sam3_insect.app import build_demo
+          from sam3_insect.inference import DEFAULT_CFG
+
+          class Stub:
+              cfg = DEFAULT_CFG
+              def predict(self, *a, **k): raise NotImplementedError
+
+          demo = build_demo(Stub())
+          print("app built:", type(demo).__name__)
+          PY
