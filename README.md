@@ -4,6 +4,7 @@
 
 [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/adambasha0/SAM3-for-Insects-segementation/blob/main/docs/sam3_insect_colab.ipynb)
 [![Weights](https://img.shields.io/badge/weights-checkpoint__18%20(3.14%20GB)-orange.svg)](https://github.com/adambasha0/SAM3-for-Insects-segementation/releases/tag/checkpoint-18)
+[![Weights on HF](https://img.shields.io/badge/%F0%9F%A4%97%20mirror-checkpoint__18-yellow.svg)](https://huggingface.co/tea98/sam3-for-insects-segmentation)
 [![License](https://img.shields.io/badge/license-SAM%20License-blue.svg)](LICENSE)
 
 Point it at a photograph of a trap, a Petri dish, a sticky card or a leaf, and it returns one
@@ -90,14 +91,15 @@ match, so a truncated download fails loudly instead of quietly loading garbage:
 from sam3_insect import resolve_checkpoint
 
 ckpt = resolve_checkpoint("release")               # GitHub Release, two parts, joined + verified
+ckpt = resolve_checkpoint("hf")                    # HuggingFace Hub, one resumable file
 ckpt = resolve_checkpoint("local", path="my.pt")   # something you already have
 ```
 
 | Source | Where | Notes |
 |---|---|---|
 | `release` | [GitHub Release `checkpoint-18`](https://github.com/adambasha0/SAM3-for-Insects-segementation/releases/tag/checkpoint-18) | Default. Two ~1.57 GiB parts, joined and checksummed |
+| `hf` | [🤗 `tea98/sam3-for-insects-segmentation`](https://huggingface.co/tea98/sam3-for-insects-segmentation) | One file, resumable — easier over a flaky link |
 | `local` | A path you supply | Also accepts the full 9.39 GB training checkpoint |
-| `hf` | A HuggingFace Hub repo you point it at | For a mirror: `resolve_checkpoint("hf", hf_repo="you/your-repo")` |
 
 ### Why two parts?
 

@@ -52,7 +52,7 @@ DEFAULT_PART_NAMES = (
 )
 
 #: Default HuggingFace Hub location (publish there to use ``source="hf"``).
-DEFAULT_HF_REPO = "adambasha0/sam3-for-insects-segmentation"
+DEFAULT_HF_REPO = "tea98/sam3-for-insects-segmentation"
 DEFAULT_HF_FILENAME = "checkpoint_18_inference.pt"
 
 
