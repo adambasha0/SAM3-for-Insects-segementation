@@ -7,7 +7,7 @@ type: software
 authors:
   - given-names: Adam
     family-names: Basha
-    affiliation: Karlsruhe Institute of Technology
+    affiliation: Philipps-Universität Marburg
 repository-code: "https://github.com/adambasha0/SAM3-for-Insects-segementation"
 abstract: >-
   Detection and instance segmentation of terrestrial arthropods using Meta's

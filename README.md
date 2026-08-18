@@ -257,6 +257,23 @@ Practical consequences:
 - **On unfamiliar imagery, sweep the slider before trusting a count.** The app caches detections
   down to 0.02, so sweeping costs nothing.
 
+## Maintainer tools
+
+[`tools/`](tools/) holds the scripts behind the published artefacts, each with
+`--help`:
+
+| Script | What it does |
+|---|---|
+| `package_checkpoint.py` | Strip a training checkpoint's optimizer state, verify every tensor is unchanged, split into under-2 GB parts with a checksum |
+| `publish_release.py` | Create or update a GitHub Release and upload the parts (stdlib only, no `gh` needed) |
+| `publish_to_hf.py` | Create or update the HuggingFace mirror; `--whoami` first, since a fine-grained token can only write to its own namespace |
+
+```sh
+python tools/package_checkpoint.py training.pt -o dist/ --parts 2
+GITHUB_TOKEN=... python tools/publish_release.py dist/ --tag checkpoint-18
+HF_TOKEN=...     python tools/publish_to_hf.py dist/checkpoint_18_inference.pt --repo you/mirror
+```
+
 ## Repository layout
 
 | Path | What it holds |
@@ -267,6 +284,7 @@ Practical consequences:
 | `docs/sam3_insect_colab.ipynb` | The Colab notebook |
 | `docs/examples/` | Three example images, and rendered previews |
 | `models/checkpoint_18_inference/` | Checksum, join script and download helper for the weights |
+| `tools/` | Packaging and publishing scripts |
 | `tests/` | Unit tests for the geometry, COCO and packaging helpers (no GPU, no weights) |
 | `MODEL_CARD.md` | What the model was trained on, what it is for, and where it fails |
 
@@ -306,5 +324,5 @@ by the same agreement: use, modify and redistribute it freely, but any redistrib
 copy of the licence and stay within Meta's Acceptable Use Policy. Code added by this repository is
 released under the same terms.
 
-Fine-tuning was carried out by Adam Basha at the Karlsruhe Institute of Technology. See
+Fine-tuning was carried out by Adam Basha at Philipps-Universität Marburg. See
 [`MODEL_CARD.md`](MODEL_CARD.md) for the training setup and known failure modes.

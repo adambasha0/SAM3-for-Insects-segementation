@@ -114,4 +114,4 @@ The checkpoint is a derivative work of the SAM 3 materials, governed by the **SA
 Use Policy. Cite SAM 3 and flat-bug alongside this work — see the
 [README](README.md#credits-and-licence).
 
-Fine-tuning by Adam Basha, Karlsruhe Institute of Technology, 2026.
+Fine-tuning by Adam Basha, Philipps-Universität Marburg, 2026.
